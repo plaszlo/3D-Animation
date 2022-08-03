@@ -29,11 +29,30 @@ function createCellsArray(maxCells)
   // 2. add a new Cell to the array *maxCells* times (for loop?)
   // 2b. maybe use random vectors for position and velocity
   // 3. return the array variable
+    
+////////////////EDIT///////////////////
+    //create new empty array, keep the name different from the argument "maxCells"
+    var newCells = [];
+    
+    for(var i = 0; i < maxCells; i++)
+    {
+        console.log();
+        //make sure to give each cell object a position, velocity etc.
+        //I used some random values, you can come up with something more creative
+        let testCell = new Cell({
+        position: p5.Vector.random3D().mult(100),
+        velocity: p5.Vector.random3D()
+        });
+        newCells.push(testCell);
+    }
+    
+    return newCells;
 }
+/////////////////////////////////////// 
 
-var maxCells = [];
-maxCells.push(new Cell());
-return maxCells;
+//var maxCells = [];
+//maxCells.push(new Cell());
+//return maxCells;
 
 /**
  * Exercise: draw each of the cells to the screen
@@ -46,16 +65,31 @@ function drawCells3D(cellsArray){
   // 2.1. translate to cell's position
   // 2.2 draw a sphere with the cell diameter
   // 2.3 pop the drawing matrix
+    
+////////////////EDIT///////////////////
+    for(let cell of cellsArray)
+    {
+        //"cellsArray" is the argument being refered to 
+        //using a for of loop simplifies the code
+	    cell.update();
+	    push();
+        //make sure to use the cells get() function to get it's position
+        //p5.js translate function can take a vector as an argument
+        translate(cell.getPosition()); 
+        sphere(cell.diameter);
+	    pop();
+    }
+/////////////////////////////////////// 
 }
 
-for(var i = 0; i < cellsArray.length; i++)
-{
-	cells[i].update();
-	push();
-		translate(cells[i].position.x,cells[i].position.y,cells[i].position.z);
-		sphere(cells[i].diameter);
-	pop();
-}
+//for(var i = 0; i < cellsArray.length; i++)
+//{
+//	cells[i].update();
+//	push();
+//		translate(cells[i].position.x,cells[i].position.y,cells[i].position.z);
+//		sphere(cells[i].diameter);
+//	pop();
+//}
 
 
 /**
@@ -71,14 +105,19 @@ function checkCollision(cell1, cell2)
  // 1. find the distance between the two cells using p5.Vector's dist() function
  // 2. if it is less than the sum of their radii, they are colliding
  // 3. return whether they are colliding, or not 
-
-var d = dist();
-if (d < ... + ...)
-{
-	return true;
-}
-else{
-	return false;
+    
+////////////////EDIT///////////////////
+    if(dist(cell1.position, cell2.position) < cell1.diameter + cell2.diameter) return true;
+    else return false;
+/////////////////////////////////////// 
+//var d = dist();
+//if (d < ... + ...)
+//{
+//	return true;
+//}
+//else{return false;}
+    
+    
 }
 
 
@@ -119,9 +158,6 @@ function constrainCells(cellsArray, worldCenterPos, worldDiameter)
   }
 }
 
-
-
-
 function setup() {
   createCanvas(800, 600, WEBGL);
 
@@ -133,12 +169,12 @@ function setup() {
     velocity: createVector(-1,-2,-3)
   });
   
-  console.log("Testing cell:");
-  console.log(testCell);
+//  console.log("Testing cell:");
+//  console.log(testCell);
 
   // This is for part 2: creating a list of cells
-  // cells = createCellsArray(5);
-  // console.log(cells)
+   cells = createCellsArray(5);
+//   console.log(cells);
 }
 
 
@@ -154,7 +190,7 @@ function draw() {
   directionalLight(255,255,255, 0,0,width/2);
   
   ambientLight(60);
-  pointLight(200,200,200, 0,0,0, 50);
+  pointLight(200,200,200, 0, 0, 0, 50);
   noStroke();
   background(80); // clear screen
   fill(220);
