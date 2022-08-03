@@ -45,7 +45,7 @@
 	 
   if (diameter === undefined)
   {
-	  this._diameter = 1;
+	  this._diameter = 100;
   }
   else this._diameter = _diameter;	
 	 
@@ -102,7 +102,10 @@
     // 2. add the velocity to the position to "move" the cell
     
     // YOUR CODE GOES HERE
-    this._position.add(velocity);
+      
+      //EDIT//
+      this._position.add(this._velocity);
+//    this._position.add(velocity);
   }
 
 
@@ -113,7 +116,7 @@
   /**
    * Set position safely.
    */
-
+  
    this.setPosition = function(position)
    {
      this._position = position;
